@@ -1,0 +1,183 @@
+<?xml version="1.0" ?>
+
+<robot name="dobot">
+
+    <!-- Defining the colors used in this robot -->
+    <material name="Black">
+        <color rgba="0 0 0 1"/>
+    </material>
+
+    <material name="White">
+        <color rgba="1 1 1 1"/>
+    </material>
+
+    <material name="Grey">
+        <color rgba="0.5 0.5 0.5 1"/>
+    </material>
+
+    <!--  -->
+    <link name="base_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 3.14159265"/>
+            <geometry>
+                <mesh filename="package://dobot/meshes/base_link.STL"/>
+            </geometry>
+            <material name="White"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://dobot/meshes/base_link.STL"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="joint_1" type ="revolute">
+        <origin xyz="0 0 0.024" rpy="0 0 -1.570796325"/>
+        <parent link="base_link"/>
+        <child link="link_1"/>
+        <axis xyz="0 0 1"/>
+        <limit effort="150.0" lower="-2.25" upper="2.25" velocity="3.15"/>
+    </joint>
+
+    <link name="link_1">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://dobot/meshes/link_1.dae"/>
+            </geometry>
+            <!--material name="White"/-->
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://dobot/meshes/link_1.STL"/>
+            </geometry>
+        </collision>
+    </link>
+
+    
+    <joint name="joint_2" type="revolute">
+        <origin xyz="-0.01175 0 0.114" rpy="1.570796325 0 -1.570796325"/>
+        <parent link="link_1"/>
+        <child link="link_2"/>
+        <axis xyz="0 0 1"/>
+        <limit effort="150.0" lower="0" upper="1.570796325" velocity="3.15"/>
+    </joint>
+
+    <link name="link_2">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://dobot/meshes/link_2.dae"/>
+            </geometry>
+            <!--material name="Black"/-->
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://dobot/meshes/link_2.STL"/>
+            </geometry>
+        </collision>
+    </link>
+    
+    <joint name="joint_3" type ="revolute">
+        <origin xyz="0.02699 0.13228 -0.01175" rpy="0 3.14159265 0"/>
+        <parent link="link_2"/>
+        <child link="link_3"/>
+        <axis xyz="0 0 1"/>
+        <limit effort="150.0" lower="0" upper="1.570796325" velocity="3.15"/>
+    </joint>
+
+    <link name="link_3">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://dobot/meshes/link_3.dae"/>
+            </geometry>
+            <!-- material name="White"/-->
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://dobot/meshes/link_3.dae"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="joint_4" type ="revolute">
+        <origin xyz="0.07431 -0.12684 0.0" rpy="0 3.14159265 0"/>
+        <parent link="link_3"/>
+        <child link="link_4"/>
+        <axis xyz="0 0 1"/>
+        <limit effort="150.0" lower="-3.14159265" upper="3.14159265" velocity="3.15"/>
+
+    </joint>
+
+    <link name="link_4">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://dobot/meshes/link_4.STL"/>
+            </geometry>
+            <material name="Grey"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://dobot/meshes/link_4.STL"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="joint_end" type ="fixed">
+        <origin xyz="-0.06 0.0 0.0" rpy="1.570796325 0 0"/>
+        <parent link="link_4"/>
+        <child link="link_end"/>
+        <axis xyz="0 0 1"/>
+        <limit effort="150.0" lower="-3.14159265" upper="3.14159265" velocity="3.15"/>
+        
+    </joint>
+
+    <link name="link_end">
+        <visual>
+            <origin xyz="-0.01 0 -0.045" rpy="1.570796325 0 0"/>
+            <geometry>
+                <mesh filename="package://dobot/meshes/link_end.STL"/>
+            </geometry>
+            <material name="Black"/>
+        </visual>
+        <collision>
+            <origin xyz="-0.01 0 -0.045" rpy="1.570796325 0 0"/>
+            <geometry>
+                <mesh filename="package://dobot/meshes/link_end.STL"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="joint_grip" type ="revolute">
+        <origin xyz="0.0 0.0 0.096" rpy="0 0 0"/>
+        <parent link="link_end"/>
+        <child link="link_grip"/>
+        <axis xyz="0 0 1"/>
+        <limit effort="150.0" lower="-2.5" upper="2.5" velocity="3.15"/>
+        
+    </joint>
+
+    <link name="link_grip">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://dobot/meshes/link_grip.STL"/>
+            </geometry>
+            <material name="Black"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://dobot/meshes/link_grip.STL"/>
+            </geometry>
+        </collision>
+    </link>
+
+</robot>  

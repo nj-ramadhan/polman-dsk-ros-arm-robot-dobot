@@ -1,0 +1,76 @@
+#!/usr/bin/env python
+
+import rospy
+from geometry_msgs.msg import Pose
+from sensor_msgs.msg import JointState
+import xml.dom.minidom
+import time
+from math import sin, cos, pi
+import tf
+import random
+import threading
+
+def get_param(name, value=None):
+    private = "~%s" % name
+    if rospy.has_param(private):
+	return rospy.get_param(private)
+    elif rospy.has_param(name):
+	return rospy.get_param(name)
+    else:
+	return value
+
+class JointStateForwarder():
+    def __init__(self):
+        self.name = []
+        self.position = []
+        self.velocity = []
+        self.effort = []
+
+        self.pub = rospy.Publisher('dobot3/joint_states', JointState, queue_size=5)
+#        s = rospy.Service('return_joint_states', ReturnJointStates, self.return_joint_states)
+
+    def joint_states_callback(self, msg):
+        self.name = msg.name
+        self.position = msg.position
+        self.velocity = msg.velocity
+        self.effort = msg.effort
+
+#        print(self.position)
+
+    def forwarder(self):
+        hz = get_param("rate", 10) # 10hz
+        r = rospy.Rate(hz)
+
+        # Publish Joint States
+        while not rospy.is_shutdown():
+            rospy.Subscriber('dobot2/joint_states', JointState, self.joint_states_callback)
+            msg = JointState()
+            msg.header.stamp = rospy.Time.now()
+
+            names = ['dobot3/joint_1','dobot3/joint_2','dobot3/joint_3','dobot3/joint_4','dobot3/joint_grip']
+            positions = []
+            velocities = []
+            efforts = []
+
+            msg.name = names
+            msg.position = self.position
+            msg.velocity = self.velocity
+            msg.effort = self.effort
+            print(self.position)
+
+            self.pub.publish(msg)
+
+            try:
+                r.sleep()
+            except rospy.exceptions.ROSTimeMovedBackwardsException:
+                pass
+
+
+if __name__ == '__main__':
+    rospy.init_node('dobot_leader_follower')
+    jsf = JointStateForwarder()
+    try:
+        jsf.forwarder()
+    except rospy.ROSInterruptException:
+        pass
+
