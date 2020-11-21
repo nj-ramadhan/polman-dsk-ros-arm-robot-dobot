@@ -1,3 +1,4 @@
 # polman-dobot
 
-this is a read me files
+This project is a ROS-workspace for controlling and visualize multi dobot magician.
+
