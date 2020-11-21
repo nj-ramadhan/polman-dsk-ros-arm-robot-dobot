@@ -1,0 +1,27 @@
+<launch>
+  <include
+    file="$(find gazebo_ros)/launch/empty_world.launch" />
+
+  <node
+    name="tf_footprint_base"
+    pkg="tf"
+    type="static_transform_publisher"
+    args="0 0 0 0 0 0 base_link base_footprint 40" />
+
+  <node
+    name="spawn_model"
+    pkg="gazebo_ros"
+    type="spawn_model"
+    args="-file $(find dobot)/urdf/dobot.urdf -urdf -model dobot.xml"
+    output="screen" />
+
+  <node
+    name="dobot_state_publisher"
+    pkg="dobot"
+    type="dobot_state_publisher" />
+
+  <node
+    name="robot_state_publisher"
+    pkg="robot_state_publisher"
+    type="state_publisher" />
+</launch>

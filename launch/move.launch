@@ -1,0 +1,29 @@
+<launch>
+  <arg
+    name="dobot" />
+  <arg
+    name="gui"
+    default="True" />
+  <param
+    name="robot_description"
+    textfile="$(find dobot)/urdf/dobot.urdf" />
+  <param
+    name="use_gui"
+    value="$(arg gui)" />
+
+  <node
+    name="DobotServer"
+    pkg="dobot"
+    type="DobotServer"
+    args="/dev/ttyUSB0" />
+
+  <node
+    name="DobotClient_topic"
+    pkg="dobot"
+    type="DobotClient_topic" />
+
+  <node
+    name="move"
+    pkg="dobot"
+    type="move" />
+</launch>

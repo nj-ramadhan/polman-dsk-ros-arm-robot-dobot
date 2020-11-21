@@ -1,0 +1,100 @@
+<launch>
+  <group ns="dobot1">
+  <arg
+    name="dobot1" />
+  <arg
+    name="gui"
+    default="True" />
+  <param
+    name="robot_description"
+    textfile="$(find dobot)/urdf/dobot1.urdf" />
+  <param
+    name="use_gui"
+    value="$(arg gui)" />
+  <node 
+    name="static_transform" 
+    pkg="tf" type="static_transform_publisher" 
+    args="0 0 0 0 0 0 map dobot1/base_link 100"/>
+  <node
+    name="robot_state_publisher"
+    pkg="robot_state_publisher"
+    type="state_publisher" />
+  <node
+    name="dobot_state_publisher1"
+    pkg="dobot"
+    type="dobot_state_publisher1" />
+  <node
+    name="dobot_move_publisher1"
+    pkg="dobot"
+    type="dobot_move_publisher1" />
+  </group>
+  
+  <group ns="dobot2">
+  <arg
+    name="dobot2" />
+  <arg
+    name="gui"
+    default="False" />
+  <param
+    name="robot_description"
+    textfile="$(find dobot)/urdf/dobot2.urdf" />
+  <param
+    name="use_gui"
+    value="$(arg gui)" />
+  <node 
+    name="static_transform" 
+    pkg="tf" type="static_transform_publisher" 
+    args="0 -0.5 0 0 0 0 map dobot2/base_link 100"/>
+  <node
+    name="robot_state_publisher"
+    pkg="robot_state_publisher"
+    type="state_publisher" />
+  <node
+    name="dobot_move_publisher2"
+    pkg="dobot"
+    type="dobot_move_publisher2" />
+  </group>
+
+  <group ns="dobot3">
+  <arg
+    name="dobot3" />
+  <arg
+    name="gui"
+    default="False" />
+  <param
+    name="robot_description"
+    textfile="$(find dobot)/urdf/dobot3.urdf" />
+  <param
+    name="use_gui"
+    value="$(arg gui)" />
+  <node 
+    name="static_transform" 
+    pkg="tf" type="static_transform_publisher" 
+    args="0 -1 0 0 0 0 map dobot3/base_link 100"/>
+  <node
+    name="robot_state_publisher"
+    pkg="robot_state_publisher"
+    type="state_publisher" />
+  <node
+    name="dobot_move_publisher3"
+    pkg="dobot"
+    type="dobot_move_publisher3" />
+  </group>
+
+  <node
+    name="dobot_leader_follower1"
+    pkg="dobot"
+    type="dobot_leader_follower1" />
+
+  <node
+    name="dobot_leader_follower2"
+    pkg="dobot"
+    type="dobot_leader_follower2" />
+
+  <node
+    name="rviz"
+    pkg="rviz"
+    type="rviz"
+    args="-d $(find dobot)/config/dobot_multi.rviz" />
+
+</launch>
