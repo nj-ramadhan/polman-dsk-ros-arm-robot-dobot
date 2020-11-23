@@ -1,5 +1,5 @@
 # polman-ros-dobot
-Developed in Bandung Polytechnic for Manufactruing (POLMAN) at Robotics Laboratory
+Developed at Robotics Laboratory in Bandung Polytechnic for Manufactruing (POLMAN), West Java, Indonesia
 
 # how to use the code
 put the entire folder and files in src folder of the workspace,
